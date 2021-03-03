@@ -57,9 +57,9 @@ CCmdLine::CCmdLine(LPCSTR lpCmdLine)
 			for (; i <= cmdlinelenght; i++)
 				if (i == cmdlinelenght)
 					value = _strdup(&lpCmdLine[i_value]);
-				else if (lpCmdLine[i] == ' ')
+				else if (lpCmdLine[i] == '-')
 				{
-					UINT lenght = i - i_value + 1;
+					UINT lenght = i - i_value;
 					value = (LPSTR)malloc(lenght);
 					ZeroMemory(value, lenght);
 					strncpy_s(value, lenght, &lpCmdLine[i_value], lenght - 1);

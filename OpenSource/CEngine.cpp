@@ -17,14 +17,16 @@ inline LPSTR strcopy(LPCSTR str)
 	return retval;
 }
 
-CEngine::CEngine()
+CEngine::CEngine(): mpqmanager(new CMpqManager)
 {
+	mpqmanager->OpenMpq("MM Engine.mpq");
+
 	m_Data["ModName"] = (DWORD)strcopy("MM Engine");
 	m_Data["ModIcon"] = (DWORD)strcopy("MMEngine.ico");
 	m_Data["Logo"] = NULL;
-	m_Data["Info"] = (DWORD)strcopy("© (2020) The Mod Makers");
+	m_Data["Info"] = (DWORD)strcopy("© (2021) The Mod Makers");
 	m_Data["Enable"] = true;
-	m_Data["ModVersion"] = (DWORD)strcopy("MM Engine - Version 2.0.1 (Dev Build)");
+	m_Data["ModVersion"] = (DWORD)strcopy("MM Engine - Version 2.0.2 (Dev Build)");
 	m_Data["Priority"] = 9;
 	m_Data["Skins"] = (DWORD)(new std::vector<std::string>{ "Human", "Orc", "Undead", "NightElf" });
 	m_Data["Keys"] = (DWORD)(new std::vector<std::string>{ "HUMAN", "ORC", "UNDEAD", "NIGHT_ELF" });
@@ -148,8 +150,6 @@ void CEngine::LoadMod(LPCSTR lpModName)
 
 	if (doc.HasMember("Mpqs") && doc["Mpqs"].IsArray())
 	{
-		mpqmanager = new CMpqManager;
-
 		for (size_t it = 0; it < doc["Mpqs"].MemberCount(); it++)
 		{
 			rapidjson::Value mpq = doc["Mpqs"][it].GetObjectA();

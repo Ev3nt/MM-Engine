@@ -1,0 +1,1 @@
+To run the mod, enter "-mod Sample Mod" in the parameters of MM Engine.exe or create a .bat with this parameter.

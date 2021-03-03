@@ -1,0 +1,34 @@
+{
+	"ModName": "Sample Mod",
+	"ModIcon": "icon",
+	"ModVersion": "MM Engine - Sample Mod 1.0.0",
+	"Preview": {
+		"Logo": "bitmap",
+		"Info": "Sample Mod\nCreate on MM Engine",
+		"Enable": true
+	},
+	"Mpqs": [
+		{
+			"Name": "Sample Archive",
+			"Priority": 10
+		}
+	],
+	"Races": [
+		{
+			"Skin": "Human",
+			"Key": "HUMAN"
+		},
+		{
+			"Skin": "Orc", 
+			"Key": "ORC"
+		},
+		{
+			"Skin": "Undead", 
+			"Key": "UNDEAD"
+		},
+		{
+			"Skin": "NightElf", 
+			"Key": "NIGHT_ELF"
+		}
+	]
+}
