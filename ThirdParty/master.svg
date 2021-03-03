@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="106" height="20" style="shape-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd">
+  <linearGradient id="b" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <mask id="a">
+    <rect width="92" height="20" rx="3" fill="#fff"/>
+  </mask>
+  <g mask="url(#a)">
+    <path fill="#555" d="M0 0h39v20H0z"/>
+    <path fill="#4c1" d="M39 0h53v20H39z"/>
+    <path fill="url(#b)" d="M0 0h92v20H0z"/>
+  </g>
+  <g fill="#fff" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+
+    <text x="6" y="15" fill="#010101" fill-opacity=".3">build</text>
+    <text x="6" y="14">build</text>
+
+    <text x="44" y="15" fill="#010101" fill-opacity=".3">passing</text>
+    <text x="44" y="14">passing</text>
+  </g>
+</svg>
