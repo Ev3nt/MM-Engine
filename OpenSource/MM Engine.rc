@@ -4,13 +4,34 @@
 
 #undef APSTUDIO_READONLY_SYMBOLS
 
-MMENGINE.ICO					ICON                    "MM Engine.ico"
-MMENGINECURSOR.CUR				CURSOR                  "MM Engine Cursor.cur"
-MMENGINEBITMAP.BMP				BITMAP                  "MM Engine Bitmap.bmp"
+
+MMENGINE.ICO            ICON                    "MM Engine.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+MMENGINECURSOR.CUR      CURSOR                  "MM Engine Cursor.cur"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+MMENGINEBITMAP.BMP      BITMAP                  "MM Engine Bitmap.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,2,0
- PRODUCTVERSION 2,0,2,0
+ FILEVERSION 2,0,3,0
+ PRODUCTVERSION 2,0,3,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -27,12 +48,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "The Mod Makers"
             VALUE "FileDescription", "Mod Makers Engine"
-            VALUE "FileVersion", "Version 2.0.2 (Dev Build)"
+            VALUE "FileVersion", "Version 2.0.3 (Dev Build)"
             VALUE "InternalName", "Mod Makers Engine"
             VALUE "LegalCopyright", "Copyright (C) 2021"
             VALUE "OriginalFilename", "MM Engine.exe"
             VALUE "ProductName", "Mod Makers Engine"
-            VALUE "ProductVersion", "Version 2.0.2 (Dev Build)"
+            VALUE "ProductVersion", "Version 2.0.3 (Dev Build)"
         END
     END
     BLOCK "VarFileInfo"

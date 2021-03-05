@@ -156,6 +156,7 @@
     <ClInclude Include="OpenSource\CMpqManager.h" />
     <ClInclude Include="OpenSource\Functions.hpp" />
     <ClInclude Include="OpenSource\Memory.hpp" />
+    <ClInclude Include="OpenSource\resource.h" />
     <ClInclude Include="OpenSource\Variables.h" />
   </ItemGroup>
   <ItemGroup>

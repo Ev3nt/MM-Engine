@@ -23,6 +23,8 @@ BOOL CALLBACK StormOpenArchive_Proxy(LPCSTR lpArchiveName, DWORD dwPriority, DWO
 BOOL CALLBACK StormOpenFileAsArchive_Proxy(DWORD arg0, LPCSTR lpArchiveName, DWORD dwPriority, DWORD dwFlags, HANDLE* hMPQ);
 BOOL CALLBACK StormLoadFile_Proxy(LPCSTR lpFileName, LPVOID lpBuffer, size_t* pSize, size_t extraSizeToAlocate, LPOVERLAPPED lpOverlapped);
 
+BOOL CALLBACK TextureExistsChecking(DWORD dwFlag);
+
 void ShowLogo(LPCSTR l_lpMod, LPCSTR l_lpFileName);
 LRESULT CALLBACK LogoWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -97,9 +99,10 @@ BOOL WINAPI WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, LPSTR lpCmdLine, int n
 	jmp(MakePtr(hGame, 0x3c11a0), RaceInit);
 	patch(MakePtr(hGame, 0x5bf4e3), 0, 1);
 
-	fill(MakePtr(hGame, 0x4e3bfa), 0x90, 2);
-	patch(MakePtr(hGame, 0x4e3bfc), 0xeb, 1);
+	/*fill(MakePtr(hGame, 0x4e3bfa), 0x90, 2);
+	patch(MakePtr(hGame, 0x4e3bfc), 0xeb, 1);*/				// 4c1300 4df4ce
 	fill(MakePtr(hGame, 0x59b3e4), 0x90, 8);
+	call(MakePtr(hGame, 0x4e3bf5), TextureExistsChecking);
 	call(MakePtr(hGame, 0xe5f0), StormOpenFileAsArchive_Proxy);
 	call(MakePtr(hGame, 0xe5ff), StormOpenArchive_Proxy);
 
@@ -202,6 +205,18 @@ BOOL CALLBACK StormLoadFile_Proxy(LPCSTR lpFileName, LPVOID lpBuffer, size_t* pS
 	}
 
 	return SFileLoadFile(lpFileName, lpBuffer, pSize, extraSizeToAlocate, lpOverlapped);
+}
+
+BOOL CALLBACK TextureExistsChecking(DWORD dwFlag)
+{
+	LPCSTR lpFileName;
+	DWORD retval;
+
+	_asm mov lpFileName, esi;
+
+	retval = stdcall<BOOL>(MakePtr(hGame, 0x4e1410), dwFlag);
+
+	return !_strnicmp(lpFileName, "ui\\widgets\\glues\\icon-map", 25) ? 0 : retval;
 }
 
 int __cdecl SStrVPrintf_Proxy(char* dest, size_t size, const char* format, void* a ...)

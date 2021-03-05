@@ -47,6 +47,9 @@
     <ClInclude Include="OpenSource\CEngine.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="OpenSource\resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="OpenSource\MM Engine.ico">
