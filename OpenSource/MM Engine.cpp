@@ -30,6 +30,9 @@ LRESULT CALLBACK LogoWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int __cdecl SStrVPrintf_Proxy(char* dest, size_t size, const char* format, void* a...);
 
+
+HMODULE WINAPI LoadLibraryA_Proxy(LPCSTR lpLibFileName);
+
 extern "C" {
 	std::string& GetRace(UINT index);
 
@@ -82,6 +85,8 @@ BOOL WINAPI WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, LPSTR lpCmdLine, int n
 	Exploit(hGame, hUser32, "LoadImageA", LoadImageA_Proxy);
 
 	Exploit(hGame, hStorm, (LPCSTR)279, StormLoadFile_Proxy);
+
+	Exploit(GetModuleHandle("mss32.dll"), GetModuleHandle("kernel32.dll"), "LoadLibraryA", LoadLibraryA_Proxy);	// Custom MIX, ASI, FLT, M3D locked
 
 	jmp(MakePtr(hGame, 0x3a2840), RaceUI);
 	jmp(MakePtr(hGame, 0x31f5d0), RaceSounds);
@@ -348,4 +353,18 @@ LRESULT CALLBACK LogoWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+
+HMODULE WINAPI LoadLibraryA_Proxy(LPCSTR lpLibFileName)
+{
+	LPCSTR lpFileName = &lpLibFileName[strlen(lpLibFileName) - 4];
+
+	char file1[] = "redist\\miles\\Mp3dec.asi";
+	char file2[] = "redist\\miles\\Mssdolby.m3d";
+	char file3[] = "redist\\miles\\Msseax2.m3d";
+	char file4[] = "redist\\miles\\Mssfast.m3d";
+	char file5[] = "redist\\miles\\Reverb3.flt";
+	
+	return (!(!_strcmpi(&lpFileName[strlen(lpFileName) - strlen(file1)], file1) || !_strcmpi(&lpFileName[strlen(lpFileName) - strlen(file2)], file2) || !_strcmpi(&lpFileName[strlen(lpFileName) - strlen(file3)], file3) || !_strcmpi(&lpFileName[strlen(lpFileName) - strlen(file4)], file4) || !_strcmpi(&lpFileName[strlen(lpFileName) - strlen(file5)], file5))) ? (!_strcmpi(lpFileName, ".mix") || !_strcmpi(lpFileName, ".asi") || !_strcmpi(lpFileName, ".flt") || !_strcmpi(lpFileName, ".m3d")) ? NULL : LoadLibrary(lpLibFileName) : LoadLibrary(lpLibFileName);
 }

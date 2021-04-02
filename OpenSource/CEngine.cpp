@@ -26,7 +26,7 @@ CEngine::CEngine(): mpqmanager(new CMpqManager)
 	m_Data["Logo"] = NULL;
 	m_Data["Info"] = (DWORD)strcopy("© (2021) The Mod Makers");
 	m_Data["Enable"] = true;
-	m_Data["ModVersion"] = (DWORD)strcopy("MM Engine - Version 2.0.3 (Dev Build)");
+	m_Data["ModVersion"] = (DWORD)strcopy("MM Engine - Version 2.0.4 (Dev Build)");
 	m_Data["Priority"] = 9;
 	m_Data["Skins"] = (DWORD)(new std::vector<std::string>{ "Human", "Orc", "Undead", "NightElf" });
 	m_Data["Keys"] = (DWORD)(new std::vector<std::string>{ "HUMAN", "ORC", "UNDEAD", "NIGHT_ELF" });
@@ -189,6 +189,13 @@ void CEngine::LoadMod(LPCSTR lpModName)
 				raceskeys.push_back(race.HasMember("Key") && race["Key"].IsString() ? race["Key"].GetString() : "UNKNOWN");
 			}
 		}
+	}
+
+	if (doc.HasMember("Bins") && doc["Bins"].IsArray())
+	{
+		for (size_t it = 0; it < doc["Bins"].MemberCount(); it++)
+			if (doc["Bins"][it].IsString())
+				LoadLibrary((path + "Bins\\" + doc["Bins"][it].GetString() + ".dll").c_str());
 	}
 }
 
