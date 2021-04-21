@@ -1,0 +1,3 @@
+[submodule "ThirdParty/StormLib"]
+	path = ThirdParty/StormLib
+	url = https://github.com/Ev3nt/StormLib
