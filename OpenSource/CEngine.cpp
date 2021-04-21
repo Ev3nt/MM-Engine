@@ -1,4 +1,5 @@
 ﻿#include "CEngine.h"
+#include "Functions.hpp"
 
 #include <document.h>
 #include <istreamwrapper.h>
@@ -7,15 +8,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
-inline LPSTR strcopy(LPCSTR str)
-{
-	size_t size = strlen(str) + 1;
-	char* retval = new char[size];
-	strcpy_s(retval, size, str);
-
-	return retval;
-}
 
 CEngine::CEngine(): mpqmanager(new CMpqManager)
 {

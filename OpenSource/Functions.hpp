@@ -15,3 +15,12 @@ inline bool FileExists(LPCSTR lpFileName)
 
 	return false;
 }
+
+inline LPSTR strcopy(LPCSTR str)
+{
+	size_t size = strlen(str) + 1;
+	char* retval = new char[size];
+	strcpy_s(retval, size, str);
+
+	return retval;
+}

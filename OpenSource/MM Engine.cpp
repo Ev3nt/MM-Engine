@@ -28,7 +28,7 @@ BOOL CALLBACK TextureExistsChecking(DWORD dwFlag);
 void ShowLogo(LPCSTR l_lpMod, LPCSTR l_lpFileName);
 LRESULT CALLBACK LogoWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-int __cdecl SStrVPrintf_Proxy(char* dest, size_t size, const char* format, void* a...);
+BOOL __cdecl SStrVPrintf_Proxy(LPSTR dest, size_t size, LPCSTR format, LPVOID a...);
 
 
 HMODULE WINAPI LoadLibraryA_Proxy(LPCSTR lpLibFileName);
@@ -70,10 +70,18 @@ extern "C" {
 BOOL WINAPI WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, LPSTR lpCmdLine, int nCmdShow)
 {
 	if (!hGame)
+	{
+		MessageBox(NULL, "Не удалось открыть Game.dll.", "Ошибка", MB_ICONERROR);
+
 		return FALSE;
+	}
 
 	if (!(procGameMain = GetProcAddress(hGame, "GameMain")))
+	{
+		MessageBox(NULL, "Game.dll поврежден. ", "Ошибка", MB_ICONERROR);
+
 		return FALSE;
+	}
 
 	cmdline = new CCmdLine(lpCmdLine);
 	engine = new CEngine();
@@ -224,7 +232,7 @@ BOOL CALLBACK TextureExistsChecking(DWORD dwFlag)
 	return !_strnicmp(lpFileName, "ui\\widgets\\glues\\icon-map", 25) ? 0 : retval;
 }
 
-int __cdecl SStrVPrintf_Proxy(char* dest, size_t size, const char* format, void* a ...)
+BOOL __cdecl SStrVPrintf_Proxy(LPSTR dest, size_t size, LPCSTR format, LPVOID a...)
 {
 	if (!strcmp(format, "%d.%d.%d.%d"))
 		return SStrVPrintf(dest, size, (LPCSTR)engine->GetData("ModVersion"));
