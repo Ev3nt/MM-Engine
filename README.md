@@ -2,6 +2,8 @@
 
 MM Engine is a tool that allows you to add and run custom mods for Warcraft III - TFT 1.26. Basically MM Engine is aimed at adding its own races, but this does not limit its functionality. ^^
 
+[![build](https://github.com/Ev3nt/MM-Engine/actions/workflows/build.yml/badge.svg)](https://github.com/Ev3nt/MM-Engine/actions/workflows/build.yml)
+
 ---
 ### Installation requirements
 * Warcraft III - TFT 1.26 
