@@ -69,6 +69,7 @@
       <Filter>Файлы ресурсов</Filter>
     </None>
     <None Include="README.md" />
+    <None Include=".github\workflows\build.yml" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="OpenSource\Race System.asm">
