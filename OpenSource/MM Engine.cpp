@@ -102,7 +102,10 @@ BOOL WINAPI WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, LPSTR lpCmdLine, int n
 	jmp(MakePtr(hGame, 0x58aa02), RaceName);
 	jmp(MakePtr(hGame, 0x39f710), RaceScoreScreen);
 	jmp(MakePtr(hGame, 0x559580), RaceOrder);
-	jmp(MakePtr(hGame, 0x5bed8e), MakePtr(hGame, 0x5bedab));
+	fill(MakePtr(hGame, 0x5bed8e), 0x90, 3);
+	patch(MakePtr(hGame, 0x5bed91), 0x7364f883, 4);
+	fill(MakePtr(hGame, 0x5bed96), 0x90, 14);
+	patch(MakePtr(hGame, 0x5beda8), 0x64c083, 3);
 	jmp(MakePtr(hGame, 0x559260), RaceSlot); // 0x560ef6 esi + 9*2 + 6		0x5c305a
 	jmp(MakePtr(hGame, 0x3a31a0), RaceStartUnits);
 	jmp(MakePtr(hGame, 0x599bcc), RaceBlocked);
@@ -155,27 +158,19 @@ BOOL WINAPI SetWindowTextA_Proxy(HWND hWnd, LPCSTR lpString)
 
 HCURSOR WINAPI LoadCursorA_Proxy(HINSTANCE hInstance, LPCSTR lpCursorName)
 {
-	if (!_strcmpi(lpCursorName, "blizzardcursor.cur"))
-		return LoadCursor(hInstance, "MMEngineCursor.cur");
-
-	return LoadCursor(hInstance, lpCursorName);
+	return LoadCursor(hInstance, "MMEngineCursor.cur");
 }
 
 HANDLE WINAPI LoadImageA_Proxy(HINSTANCE hInst, LPCSTR name, UINT type, int cx, int cy, UINT fuLoad)
 {
-	if (!_strcmpi(name, "war3x.ico"))
-	{
-		LPCSTR icon = (LPCSTR)engine->GetData("ModIcon");
+	LPCSTR icon = (LPCSTR)engine->GetData("ModIcon");
 
-		if (!_strcmpi(icon, "MMEngine.ico"))
-			return LoadImage(hInst, icon, type, cx, cy, fuLoad);
-		else if (FileExists(icon))
-			return LoadImage(NULL, icon, IMAGE_ICON, NULL, NULL, LR_LOADFROMFILE | LR_DEFAULTSIZE);
-		else
-			return LoadImage(hInst, "MMEngine.ico", type, cx, cy, fuLoad);
-	}
-
-	return LoadImage(hInst, name, type, cx, cy, fuLoad);
+	if (!_strcmpi(icon, "MMEngine.ico"))
+		return LoadImage(hInst, icon, type, cx, cy, fuLoad);
+	else if (FileExists(icon))
+		return LoadImage(NULL, icon, IMAGE_ICON, NULL, NULL, LR_LOADFROMFILE | LR_DEFAULTSIZE);
+	else
+		return LoadImage(hInst, "MMEngine.ico", type, cx, cy, fuLoad);
 }
 
 BOOL CALLBACK StormOpenArchive_Proxy(LPCSTR lpArchiveName, DWORD dwPriority, DWORD dwFlags, HANDLE* hMPQ)

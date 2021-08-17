@@ -1,5 +1,6 @@
 ﻿#include "CEngine.h"
 #include "Functions.hpp"
+#include "Variables.h"
 
 #include <document.h>
 #include <istreamwrapper.h>
@@ -18,7 +19,7 @@ CEngine::CEngine(): mpqmanager(new CMpqManager)
 	m_Data["Logo"] = NULL;
 	m_Data["Info"] = (DWORD)strcopy("© (2021) The Mod Makers");
 	m_Data["Enable"] = true;
-	m_Data["ModVersion"] = (DWORD)strcopy("MM Engine - Version 2.0.4 (Dev Build)");
+	m_Data["ModVersion"] = (DWORD)strcopy(MME);
 	m_Data["Priority"] = 9;
 	m_Data["Skins"] = (DWORD)(new std::vector<std::string>{ "Human", "Orc", "Undead", "NightElf" });
 	m_Data["Keys"] = (DWORD)(new std::vector<std::string>{ "HUMAN", "ORC", "UNDEAD", "NIGHT_ELF" });
