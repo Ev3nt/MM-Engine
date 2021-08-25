@@ -18,6 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="OpenSource\Bitmap.cpp" />
+    <ClCompile Include="OpenSource\CCmdLine.cpp" />
+    <ClCompile Include="OpenSource\CEngine.cpp" />
+    <ClCompile Include="OpenSource\CImportTable.cpp" />
+    <ClCompile Include="OpenSource\Detours.cpp" />
+    <ClCompile Include="OpenSource\MM Engine.cpp" />
+    <ClCompile Include="OpenSource\RaceSystem.cpp" />
+    <ClCompile Include="OpenSource\Utils.cpp" />
+    <ClCompile Include="OpenSource\Variables.cpp" />
+    <ClCompile Include="OpenSource\СMpqManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="OpenSource\Bitmap.h" />
+    <ClInclude Include="OpenSource\CCmdLine.h" />
+    <ClInclude Include="OpenSource\CEngine.h" />
+    <ClInclude Include="OpenSource\CImportTable.h" />
+    <ClInclude Include="OpenSource\CMpqManager.h" />
+    <ClInclude Include="OpenSource\Detours.h" />
+    <ClInclude Include="OpenSource\Memory.h" />
+    <ClInclude Include="OpenSource\RaceSystem.h" />
+    <ClInclude Include="OpenSource\Utils.h" />
+    <ClInclude Include="OpenSource\Variables.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OpenSource\MM Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="OpenSource\RaceSystem.asm">
+      <FileType>Document</FileType>
+    </MASM>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -110,6 +142,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\RapidJSON\Include;$(SolutionDir)\ThirdParty\StormLib\Include</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,36 +181,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="OpenSource\CCmdLine.cpp" />
-    <ClCompile Include="OpenSource\CEngine.cpp" />
-    <ClCompile Include="OpenSource\CMpqManager.cpp" />
-    <ClCompile Include="OpenSource\MM Engine.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="OpenSource\CCmdLine.h" />
-    <ClInclude Include="OpenSource\CEngine.h" />
-    <ClInclude Include="OpenSource\CMpqManager.h" />
-    <ClInclude Include="OpenSource\Functions.hpp" />
-    <ClInclude Include="OpenSource\Memory.hpp" />
-    <ClInclude Include="OpenSource\resource.h" />
-    <ClInclude Include="OpenSource\Variables.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="OpenSource\MM Engine Bitmap.bmp" />
-    <Image Include="OpenSource\MM Engine.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="OpenSource\MM Engine.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".github\workflows\build.yml" />
-    <None Include="OpenSource\MM Engine Cursor.cur" />
-    <MASM Include="OpenSource\Race System.asm">
-      <FileType>Document</FileType>
-    </MASM>
-    <None Include="README.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />

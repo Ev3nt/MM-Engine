@@ -18,46 +18,68 @@
     <ClCompile Include="OpenSource\MM Engine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="OpenSource\CCmdLine.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenSource\CMpqManager.cpp">
+    <ClCompile Include="OpenSource\MM Engine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="OpenSource\CEngine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="OpenSource\СMpqManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\CImportTable.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\Detours.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\Variables.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\CCmdLine.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\Bitmap.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\Utils.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenSource\RaceSystem.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpenSource\Variables.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenSource\CCmdLine.h">
+    <ClInclude Include="OpenSource\CEngine.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="OpenSource\CMpqManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="OpenSource\Memory.hpp">
+    <ClInclude Include="OpenSource\CImportTable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="OpenSource\Functions.hpp">
+    <ClInclude Include="OpenSource\Detours.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="OpenSource\CEngine.h">
+    <ClInclude Include="OpenSource\Variables.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="OpenSource\resource.h">
+    <ClInclude Include="OpenSource\Memory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="OpenSource\MM Engine.ico">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="OpenSource\MM Engine Bitmap.bmp">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
+    <ClInclude Include="OpenSource\CCmdLine.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenSource\Bitmap.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenSource\Utils.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenSource\RaceSystem.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenSource\MM Engine.rc">
@@ -65,14 +87,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenSource\MM Engine Cursor.cur">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-    <None Include="README.md" />
-    <None Include=".github\workflows\build.yml" />
-  </ItemGroup>
-  <ItemGroup>
-    <MASM Include="OpenSource\Race System.asm">
+    <MASM Include="OpenSource\RaceSystem.asm">
       <Filter>Исходные файлы</Filter>
     </MASM>
   </ItemGroup>
