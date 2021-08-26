@@ -38,7 +38,7 @@ raceUI PROC
 	pop eax
 	jmp pSuccessful2
 pSuccessful1:
-	lea ecx, Race_Random
+	lea ecx, race_Random
 pSuccessful2:
 	mov eax, gameBase
 	add eax, 31f510h
@@ -67,7 +67,7 @@ raceSounds PROC
 	add eax, 31f530h
 	jmp eax
 pSuccessful:
-	lea ecx, Race_Random
+	lea ecx, race_Random
 	mov eax, gameBase
 	add eax, 31f61eh
 	jmp eax
@@ -94,10 +94,10 @@ pSuccessful1:
 	pop eax
 	jmp pSuccessful4
 pSuccessful3:
-	lea edx, Race_Unknown
+	lea edx, race_Unknown
 	jmp pSuccessful4
 pSuccessful2:
-	lea edx, Race_Random
+	lea edx, race_Random
 pSuccessful4:
 	mov eax, gameBase
 	add eax, 5a3db7h
@@ -123,10 +123,10 @@ raceName PROC
 	pop eax
 	jmp pSuccessful3
 pSuccessful2:
-	lea ecx, RaceName_Unknown
+	lea ecx, raceName_Unknown
 	jmp pSuccessful3
 pSuccessful1:
-	lea ecx, RaceName_Random
+	lea ecx, raceName_Random
 pSuccessful3:
 	mov eax, gameBase
 	add eax, 58aa46h
@@ -145,7 +145,7 @@ raceScoreScreen PROC
 	pop ecx
 	ret
 pSuccessful:
-	lea eax, Race_Unknown
+	lea eax, race_Unknown
 	ret
 raceScoreScreen ENDP
 

@@ -3,6 +3,7 @@
 #include "Memory.h"
 #include "Bitmap.h"
 #include "RaceSystem.h"
+#include "Manifest.h"
 
 struct Offsets
 {
@@ -30,6 +31,17 @@ struct Offsets
 	DWORD someOpcodeFixes6 = m_gameBase + 0x5c0a25;
 	DWORD someOpcodeFixes7 = m_gameBase + 0x5bf4e3;
 	DWORD someOpcodeFixes8 = m_gameBase + 0x59b3e4;
+
+	DWORD setFrameTextureCheck = m_gameBase + 0x4e3bf5;
+	DWORD setOpenMapFileAsArchive = m_gameBase + 0xe5f0;
+	DWORD setOpenMap = m_gameBase + 0xe5ff;
+
+	DWORD setCreateMatrixPerspectiveFov = m_gameBase + 0x7b66f0;
+	DWORD setBuildHPBars = m_gameBase + 0x2c7485;
+
+	DWORD setLocalDelay = m_gameBase + 0x660f01;
+	DWORD setLanDelay = m_gameBase + 0x661a91;
+	DWORD setNetDelay = m_gameBase + 0x65de41;
 };
 
 CEngine::CEngine(HMODULE gameBase) : m_gameBase(gameBase), m_importTable(m_gameBase), m_mpqManager()
@@ -77,10 +89,12 @@ CEngine::CEngine(HMODULE gameBase) : m_gameBase(gameBase), m_importTable(m_gameB
 
 	setData("ModName", new std::string("MM Engine"));
 	setData("ModIcon", new std::string("MMEngine"));
-	setData("ModVersion", new std::string("MM Engine - Version 2.0.5 (OOP Build)"));
+	setData("ModVersion", new std::string(MME));
+
 	setData("Bitmap", new std::string("MMEngineBitmap"));
 	setData("Info", new std::string("© (2021) The Mod Makers"));
 	setData("Enable", true);
+
 	setData("Skins", new std::vector<std::string>{ "Human", "Orc", "Undead", "NightElf" });
 	setData("Keys", new std::vector<std::string>{ "HUMAN", "ORC", "UNDEAD", "NIGHT_ELF" });
 }
@@ -94,11 +108,46 @@ void CEngine::loadMod(std::string modName)
 		m_importTable.detour("LoadImageA", LoadImageA_Detour);
 		m_importTable.detour("LoadCursorA", LoadCursorA_Detour);
 	}
-	
+
+	if (m_importTable.selectApi(GetModuleHandle("storm.dll")))
+	{
+		m_importTable.detour("279", StormLoadFile_Detour);
+		m_importTable.detour("265", StormGetFileSize_Detour); // Map size fix
+	}
+
+	if (m_importTable.selectApi(GetModuleHandle("kernel32.dll")))
+	{
+		m_importTable.detour("CreateEventA", CreateEventA_Detour); // Multi-window allow
+	}
+
+	if (m_importTable.selectApi(GetModuleHandle("wsock32.dll")))
+	{
+		m_importTable.detour("bind", bind_Detour); // Multi-window allow, multiplayer fix
+		m_importTable.detour("sendto", sendto_Detour); // Multi-window allow, multiplayer fix
+	}
+
+	CImportTable mss32ImportTable(GetModuleHandle("mss32.dll"));
+	if (mss32ImportTable.selectApi(GetModuleHandle("kernel32.dll")))
+	{
+		mss32ImportTable.detour("LoadLibraryA", LoadLibraryA_Detour); // Custom MIX, ASI, FLT, M3D locked
+	}
+
 	Offsets offsets(m_gameBase);
 	call(offsets.setGameVersion, SStrVPrintf_Detour);
+	call(offsets.setFrameTextureCheck, TextureExistsChecking);
+	call(offsets.setOpenMapFileAsArchive, StormOpenFileAsArchive_Detour);
+	call(offsets.setOpenMap, StormOpenArchive_Detour);
 
-	// I forgot some of the addresses
+	jmp(offsets.setCreateMatrixPerspectiveFov, CreateMatrixPerspectiveFov_Detour);
+	call(offsets.setBuildHPBars, BuildHPBars_Detour);
+
+	// Network delay fix
+	write(offsets.setLocalDelay, 30, sizeof(int));
+	write(offsets.setLanDelay, 30, sizeof(int));
+	write(offsets.setNetDelay, 80, sizeof(int));
+
+	// Unlocking the number of races
+	// I forgot some of the addresses, so i just rename them to someOpcodeFixes#
 	jmp(offsets.setRaceUI, raceUI);
 	jmp(offsets.setRaceSounds, raceSounds);
 	jmp(offsets.setRaceLoadingScreen, raceLoadingScreen);
@@ -120,7 +169,13 @@ void CEngine::loadMod(std::string modName)
 	fill(offsets.someOpcodeFixes8, 0x90, 8);
 
 	m_modName = modName;
-	showBitmap(*getData<std::string*>("Bitmap"), *getData<std::string*>("Info"));
+
+	readManifests();
+
+	if (getData<bool>("Enable"))
+	{
+		showBitmap(*getData<std::string*>("Bitmap"), *getData<std::string*>("Info"));
+	}
 }
 
 BOOL CEngine::startGame()
@@ -140,4 +195,9 @@ void CEngine::setData(std::string key, DataType value)
 std::string& CEngine::getModName()
 {
 	return m_modName;
+}
+
+CMpqManager& CEngine::getMpqManager()
+{
+	return m_mpqManager;
 }

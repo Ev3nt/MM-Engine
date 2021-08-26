@@ -33,7 +33,7 @@ public:
 		{
 			if (pair.first == key)
 			{
-				return ReturnType(pair.second);
+				return *(ReturnType*)&pair.second;
 			}
 		}
 
@@ -44,5 +44,6 @@ public:
 	void setData(std::string key, DataType value);
 
 	std::string& getModName();
+	CMpqManager& getMpqManager();
 };
 #endif

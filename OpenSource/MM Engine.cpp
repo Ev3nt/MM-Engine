@@ -9,7 +9,7 @@ BOOL WINAPI WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, LPSTR lpCmdLine, int n
 	}
 	catch(std::string& exception)
 	{
-		MessageBox(NULL, exception.c_str(), "Error", MB_ICONHAND | MB_SYSTEMMODAL);
+		MessageBox(NULL, exception.c_str(), "Error", MB_ICONHAND | MB_SETFOREGROUND);
 	
 		return FALSE;
 	}

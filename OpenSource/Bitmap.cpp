@@ -11,13 +11,13 @@ LRESULT CALLBACK bitmapWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 //----------------------------------------------------------------
 
-void showBitmap(std::string fileName, std::string info)
+void showBitmap(std::string& fileName, std::string& info)
 {
 	std::string bitmapName = ".\\Mods\\" + engine->getModName() + "\\" + fileName + ".bmp";
 
 	if (!fileExists(bitmapName))
 	{
-		bitmap = (HBITMAP)LoadImageA(instance, fileName.append(".bmp").c_str(), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
+		bitmap = (HBITMAP)LoadImageA(instance, "MMEngineBitmap.bmp", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
 	}
 	else
 	{

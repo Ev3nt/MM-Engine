@@ -45,7 +45,7 @@
     <ClCompile Include="OpenSource\Utils.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="OpenSource\RaceSystem.cpp">
+    <ClCompile Include="OpenSource\Manifest.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,6 +78,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="OpenSource\RaceSystem.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenSource\Manifest.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

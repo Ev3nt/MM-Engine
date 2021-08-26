@@ -24,8 +24,8 @@
     <ClCompile Include="OpenSource\CEngine.cpp" />
     <ClCompile Include="OpenSource\CImportTable.cpp" />
     <ClCompile Include="OpenSource\Detours.cpp" />
+    <ClCompile Include="OpenSource\Manifest.cpp" />
     <ClCompile Include="OpenSource\MM Engine.cpp" />
-    <ClCompile Include="OpenSource\RaceSystem.cpp" />
     <ClCompile Include="OpenSource\Utils.cpp" />
     <ClCompile Include="OpenSource\Variables.cpp" />
     <ClCompile Include="OpenSource\СMpqManager.cpp" />
@@ -37,6 +37,7 @@
     <ClInclude Include="OpenSource\CImportTable.h" />
     <ClInclude Include="OpenSource\CMpqManager.h" />
     <ClInclude Include="OpenSource\Detours.h" />
+    <ClInclude Include="OpenSource\Manifest.h" />
     <ClInclude Include="OpenSource\Memory.h" />
     <ClInclude Include="OpenSource\RaceSystem.h" />
     <ClInclude Include="OpenSource\Utils.h" />
