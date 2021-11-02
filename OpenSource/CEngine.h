@@ -7,12 +7,14 @@
 #include "CMpqManager.h"
 #pragma comment(lib, "version.lib")
 
+typedef BOOL(WINAPI* _gameMain)(HMODULE);
+
 #ifndef _CEngine_h
 #define _CEngine_h
 class CEngine
 {
 	HMODULE m_gameBase;
-	FARPROC m_gameMain;
+	_gameMain m_gameMain;
 
 	CImportTable m_importTable;
 	CMpqManager m_mpqManager;

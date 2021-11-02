@@ -87,7 +87,7 @@ void readModManifest()
 
 	if (!document.IsObject())
 	{
-		MessageBox(NULL, "Manifest.json повреждён или имеет синтаксические ошибки.", "Ошибка", MB_ICONERROR);
+		MessageBox(NULL, "Manifest.json is corrupt or contains syntax error.", "Error", MB_ICONERROR);
 
 		return;
 	}
@@ -138,7 +138,7 @@ void readModManifest()
 				if (!engine->getMpqManager().loadMpq((path + "Mpqs\\" + filename + ".mpq").c_str(),
 					(mpq.HasMember("Priority") && mpq["Priority"].IsInt()) ? mpq["Priority"].GetInt() : 0) && engine->getData<bool>("ShowMpqMessage"))
 				{
-					MessageBox(NULL, ("В моде " + engine->getModName() + " отсутствует " + filename + ".mpq").c_str(), "Внимание", MB_ICONWARNING);
+					MessageBox(NULL, (engine->getModName() + " doesn't contain " + filename + ".mpq").c_str(), "Warning", MB_ICONWARNING);
 				}
 			}
 		}

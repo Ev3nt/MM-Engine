@@ -49,3 +49,5 @@ BOOL WINAPI TextureExistsChecking(DWORD dwFlag);
 void __fastcall CreateMatrixPerspectiveFov_Detour(UINT outMatrix, UINT unused, float fovY, float aspectRatio, float nearZ, float farZ);
 
 void __fastcall BuildHPBars_Detour(UINT a1, UINT unused, UINT a2, UINT a3);
+
+DWORD WINAPI setWarcraftID();

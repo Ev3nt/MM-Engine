@@ -76,6 +76,7 @@ HANDLE WINAPI CreateEventA_Detour(LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL 
 //-------------------------------------------------------------------------------
 
 WORD tcp_port;
+DWORD mmeID = 'M' + ('M' << 8) + ('E' << 16);
 
 BOOL WINAPI bind_Detour(SOCKET s, const sockaddr* name, int namelen)
 {
@@ -118,6 +119,7 @@ BOOL WINAPI bind_Detour(SOCKET s, const sockaddr* name, int namelen)
 
 #define W3GS_HEADER_CONSTANT 247
 #define W3GS_GAMEINFO 48
+#define W3GS_SEARCHGAME 47
 
 BOOL WINAPI sendto_Detour(SOCKET s, const char* buf, int len, int flags, const sockaddr* to, int tolen)
 {
@@ -131,13 +133,22 @@ BOOL WINAPI sendto_Detour(SOCKET s, const char* buf, int len, int flags, const s
 	war3Packet* data = (war3Packet*)buf;
 	if (data->war3HeaderConstant == W3GS_HEADER_CONSTANT && len >= sizeof(war3Packet))
 	{
-		if (data->protocol == W3GS_GAMEINFO)
+		switch (data->protocol)
+		{
+		case W3GS_GAMEINFO:
 		{
 			*(WORD*)(&buf[data->size - 2]) = tcp_port;
 			sockaddr_in addr = *(sockaddr_in*)to;
 			addr.sin_addr.S_un.S_addr = inet_addr("255.255.255.255");
-			
+
 			return sendto(s, (LPCSTR)buf, len, flags, (const sockaddr*)&addr, sizeof(sockaddr_in));
+		}
+		case W3GS_SEARCHGAME:
+		{
+			CopyMemory((LPVOID)&buf[sizeof(war3Packet)], (LPVOID)&mmeID, 4);
+		}
+		default:
+			break;
 		}
 	}
 
@@ -214,7 +225,7 @@ BOOL WINAPI TextureExistsChecking(DWORD dwFlag)
 
 	_asm mov lpFileName, esi;
 
-	retval = reinterpret_cast<BOOL(__stdcall*)(DWORD)>((DWORD)gameBase + 0x4e1410)(dwFlag); // Calling original function
+	retval = reinterpret_cast<BOOL(WINAPI*)(DWORD)>((DWORD)gameBase + 0x4e1410)(dwFlag); // Calling original function
 
 	return !_strnicmp(lpFileName, "ui\\widgets\\glues\\icon-map", 25) ? 0 : retval;
 }
@@ -267,4 +278,9 @@ void __fastcall BuildHPBars_Detour(UINT a1, UINT unused, UINT a2, UINT a3)
 	{
 		*((float*)pHPBarFrame + 22) /= wideScreenMul;
 	}
+}
+
+DWORD WINAPI setWarcraftID()
+{
+	return mmeID;
 }

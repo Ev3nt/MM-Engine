@@ -42,6 +42,9 @@ struct Offsets
 	DWORD setLocalDelay = m_gameBase + 0x660f01;
 	DWORD setLanDelay = m_gameBase + 0x661a91;
 	DWORD setNetDelay = m_gameBase + 0x65de41;
+
+	DWORD setWarcraftID1 = m_gameBase + 0x54f248;
+	DWORD setWarcraftID2 = m_gameBase + 0x54f24f;
 };
 
 CEngine::CEngine(HMODULE gameBase) : m_gameBase(gameBase), m_importTable(m_gameBase), m_mpqManager()
@@ -53,7 +56,7 @@ CEngine::CEngine(HMODULE gameBase) : m_gameBase(gameBase), m_importTable(m_gameB
 		return;
 	}
 
-	m_gameMain = GetProcAddress(m_gameBase, "GameMain");
+	m_gameMain = (_gameMain)GetProcAddress(m_gameBase, "GameMain");
 	if (!m_gameMain)
 	{
 		throw std::string("Game.dll is corrupt.");
@@ -75,14 +78,14 @@ CEngine::CEngine(HMODULE gameBase) : m_gameBase(gameBase), m_importTable(m_gameB
 	if (((verInfo->dwFileVersionMS >> 16) & 0xffff) != 1 || ((verInfo->dwFileVersionMS >> 0) & 0xffff) != 26 ||
 		((verInfo->dwFileVersionLS >> 16) & 0xffff) != 0 || ((verInfo->dwFileVersionLS >> 0) & 0xffff) != 6401)
 	{
-		throw std::string("Invalid version of game.dll.");
+		throw std::string("Unsupported version of game.dll. ");
 
 		return;
 	}
 
 	if (!m_mpqManager.loadMpq("MM Engine.mpq", 9, 0))
 	{
-		throw std::string("Unable to load MM Engine.mpq.");
+		throw std::string("Couldn't open MM Engine.mpq.");
 
 		return;
 	}
@@ -167,6 +170,8 @@ void CEngine::loadMod(std::string modName)
 	jmp(offsets.setRaceInit, raceInit);
 	write(offsets.someOpcodeFixes7, 0, 1);
 	fill(offsets.someOpcodeFixes8, 0x90, 8);
+	call(offsets.setWarcraftID1, setWarcraftID);
+	call(offsets.setWarcraftID2, setWarcraftID);
 
 	m_modName = modName;
 
@@ -180,7 +185,7 @@ void CEngine::loadMod(std::string modName)
 
 BOOL CEngine::startGame()
 {
-	BOOL result = ((BOOL(__stdcall*)(HMODULE))(m_gameMain))(m_gameBase);
+	BOOL result = m_gameMain(m_gameBase);
 	FreeLibrary(m_gameBase);
 
 	return result;
